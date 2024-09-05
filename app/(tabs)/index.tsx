@@ -1,70 +1,160 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  View,
+  Text,
+  Animated,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { AnimtedAppBar } from "@/components/AnimatedAppbar";
+import { TabView } from "@rneui/themed";
+import { useState } from "react";
+import { StatusBar } from "react-native";
+import { SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
+  const scrollY = new Animated.Value(0);
+  const diffClamp = Animated.diffClamp(scrollY, 0, 150);
+  const translateY = diffClamp.interpolate({
+    inputRange: [0, 150],
+    outputRange: [0, -150],
+  });
+  const [tabIndex, setTabIndex] = useState(0);
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar backgroundColor="#f8f8f8" barStyle="dark-content" />
+
+      {AnimtedAppBar(translateY, tabIndex, setTabIndex, navigator)}
+      <View style={styles.container}>
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <TabView
+            value={tabIndex}
+            onChange={setTabIndex}
+            containerStyle={{
+              width: "100%",
+              flex: 1,
+            }}
+          >
+            <TabView.Item
+              style={{
+                width: "100%",
+              }}
+            >
+              <ScrollView
+                onScroll={(e) => {
+                  scrollY.setValue(e.nativeEvent.contentOffset.y);
+                }}
+              >
+                <View style={{ height: 150 }}></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    gap: 8,
+                    paddingHorizontal: 20,
+                  }}
+                >
+                  <Image
+                    source={require("@/assets/images/avatar.png")}
+                    style={styles.logo}
+                  />
+                  <TextInput
+                    placeholder="What's on your mind?"
+                    placeholderTextColor="#5b5e68"
+                    style={{
+                      flex: 1,
+                      backgroundColor: "#eff0f3",
+                      borderRadius: 8,
+                      borderWidth: 0,
+                      paddingVertical: 6,
+                      paddingHorizontal: 16,
+                      fontSize: 16,
+                    }}
+                  />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <TouchableOpacity>
+                      <Image
+                        source={require("@/assets/images/attach-image.png")}
+                        style={{
+                          width: 22,
+                          height: 22,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image
+                        source={require("@/assets/images/attach-gif.png")}
+                        style={{
+                          width: 22,
+                          height: 22,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Image
+                        source={require("@/assets/images/more-options.png")}
+                        style={{
+                          width: 22,
+                          height: 22,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <Text>Recent</Text>
+              </ScrollView>
+            </TabView.Item>
+            <TabView.Item style={{ width: "100%" }}>
+              <Text>Favorite</Text>
+            </TabView.Item>
+            <TabView.Item style={{ width: "100%" }}>
+              <Text>Cart</Text>
+            </TabView.Item>
+          </TabView>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 30,
+  },
+  scrollContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logo: {
+    height: 32,
+    width: 32,
   },
 });
