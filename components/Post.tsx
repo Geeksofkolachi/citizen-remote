@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { View } from "react-native";
 import * as Linking from "expo-linking";
+import { useState } from "react";
 
 interface IPostProps {
   disableImage?: boolean;
@@ -18,6 +19,12 @@ interface IPostProps {
   poll?: boolean;
 }
 
+enum POLLS_OPTIONS {
+  CHEESEBURGER = "Cheesburger",
+  BIG_MAC = "Big mac",
+  OTHER = "Other",
+}
+
 export default function Post({
   disableImage,
   disableComment,
@@ -26,6 +33,14 @@ export default function Post({
   link,
   poll,
 }: IPostProps) {
+  const [voted, setVoted] = useState("");
+  const handleVote = (option: POLLS_OPTIONS) => {
+    if (voted === option) {
+      setVoted("");
+      return;
+    }
+    setVoted(option);
+  };
   return (
     <View
       style={{
@@ -331,7 +346,8 @@ export default function Post({
               zIndex: 193,
             }}
           >
-            <View
+            <TouchableOpacity
+              onPress={() => handleVote(POLLS_OPTIONS.CHEESEBURGER)}
               style={{
                 display: "flex",
                 paddingTop: 8,
@@ -357,8 +373,8 @@ export default function Post({
             >
               <View
                 style={{
-                  width: 159,
-                  height: 36,
+                  width: voted === POLLS_OPTIONS.CHEESEBURGER ? 180 : 159,
+                  height: 38,
                   flexShrink: 0,
                   backgroundColor: "rgba(0, 16, 64, 0.06)",
                   borderTopLeftRadius: 6,
@@ -371,30 +387,50 @@ export default function Post({
                   zIndex: 195,
                 }}
               />
-              <View
-                style={{
-                  width: 16,
-                  height: 16,
-                  flexShrink: 0,
-                  position: "relative",
-                  overflow: "hidden",
-                  zIndex: 196,
-                }}
-              >
-                <ImageBackground
+              {voted === POLLS_OPTIONS.CHEESEBURGER ? (
+                <View
                   style={{
-                    width: 13.333,
-                    height: 13.333,
+                    width: 16,
+                    height: 16,
+                    flexShrink: 0,
                     position: "relative",
-                    zIndex: 197,
-                    marginTop: 1.333,
-                    marginRight: 0,
-                    marginBottom: 0,
-                    marginLeft: 1.333,
+                    overflow: "hidden",
+                    zIndex: 196,
                   }}
-                  source={require("@/assets/images/check-icon.png")}
+                >
+                  <ImageBackground
+                    style={{
+                      width: 13.333,
+                      height: 13.333,
+                      position: "relative",
+                      zIndex: 197,
+                      marginTop: 1.333,
+                      marginRight: 0,
+                      marginBottom: 0,
+                      marginLeft: 1.333,
+                    }}
+                    source={require("@/assets/images/check-icon.png")}
+                  />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    width: 12,
+                    height: 12,
+                    flexShrink: 0,
+                    borderTopLeftRadius: 17,
+                    borderTopRightRadius: 17,
+                    borderBottomRightRadius: 17,
+                    borderBottomLeftRadius: 17,
+                    borderWidth: 2,
+                    borderColor: "rgba(0, 8, 48, 0.27)",
+                    borderStyle: "solid",
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 202,
+                  }}
                 />
-              </View>
+              )}
               <Text
                 style={{
                   height: 20,
@@ -432,10 +468,11 @@ export default function Post({
                 }}
                 numberOfLines={1}
               >
-                25%
+                {voted === POLLS_OPTIONS.CHEESEBURGER ? "50%" : "25%"}
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleVote(POLLS_OPTIONS.BIG_MAC)}
               style={{
                 display: "flex",
                 paddingTop: 8,
@@ -461,7 +498,7 @@ export default function Post({
             >
               <View
                 style={{
-                  width: 126,
+                  width: voted === POLLS_OPTIONS.CHEESEBURGER ? 150 : 126,
                   height: 36,
                   flexShrink: 0,
                   backgroundColor: "rgba(0, 16, 64, 0.06)",
@@ -475,23 +512,50 @@ export default function Post({
                   zIndex: 201,
                 }}
               />
-              <View
-                style={{
-                  width: 12,
-                  height: 12,
-                  flexShrink: 0,
-                  borderTopLeftRadius: 17,
-                  borderTopRightRadius: 17,
-                  borderBottomRightRadius: 17,
-                  borderBottomLeftRadius: 17,
-                  borderWidth: 2,
-                  borderColor: "rgba(0, 8, 48, 0.27)",
-                  borderStyle: "solid",
-                  position: "relative",
-                  overflow: "hidden",
-                  zIndex: 202,
-                }}
-              />
+              {voted === POLLS_OPTIONS.BIG_MAC ? (
+                <View
+                  style={{
+                    width: 16,
+                    height: 16,
+                    flexShrink: 0,
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 196,
+                  }}
+                >
+                  <ImageBackground
+                    style={{
+                      width: 13.333,
+                      height: 13.333,
+                      position: "relative",
+                      zIndex: 197,
+                      marginTop: 1.333,
+                      marginRight: 0,
+                      marginBottom: 0,
+                      marginLeft: 1.333,
+                    }}
+                    source={require("@/assets/images/check-icon.png")}
+                  />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    width: 12,
+                    height: 12,
+                    flexShrink: 0,
+                    borderTopLeftRadius: 17,
+                    borderTopRightRadius: 17,
+                    borderBottomRightRadius: 17,
+                    borderBottomLeftRadius: 17,
+                    borderWidth: 2,
+                    borderColor: "rgba(0, 8, 48, 0.27)",
+                    borderStyle: "solid",
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 202,
+                  }}
+                />
+              )}
               <Text
                 style={{
                   height: 20,
@@ -529,10 +593,11 @@ export default function Post({
                 }}
                 numberOfLines={1}
               >
-                24%
+                {voted === POLLS_OPTIONS.BIG_MAC ? "37%" : "24%"}
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleVote(POLLS_OPTIONS.OTHER)}
               style={{
                 display: "flex",
                 paddingTop: 8,
@@ -558,7 +623,7 @@ export default function Post({
             >
               <View
                 style={{
-                  width: 126,
+                  width: voted === POLLS_OPTIONS.OTHER ? 240 : 126,
                   height: 36,
                   flexShrink: 0,
                   backgroundColor: "rgba(0, 16, 64, 0.06)",
@@ -572,23 +637,50 @@ export default function Post({
                   zIndex: 206,
                 }}
               />
-              <View
-                style={{
-                  width: 12,
-                  height: 12,
-                  flexShrink: 0,
-                  borderTopLeftRadius: 17,
-                  borderTopRightRadius: 17,
-                  borderBottomRightRadius: 17,
-                  borderBottomLeftRadius: 17,
-                  borderWidth: 2,
-                  borderColor: "rgba(0, 8, 48, 0.27)",
-                  borderStyle: "solid",
-                  position: "relative",
-                  overflow: "hidden",
-                  zIndex: 207,
-                }}
-              />
+              {voted === POLLS_OPTIONS.OTHER ? (
+                <View
+                  style={{
+                    width: 16,
+                    height: 16,
+                    flexShrink: 0,
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 196,
+                  }}
+                >
+                  <ImageBackground
+                    style={{
+                      width: 13.333,
+                      height: 13.333,
+                      position: "relative",
+                      zIndex: 197,
+                      marginTop: 1.333,
+                      marginRight: 0,
+                      marginBottom: 0,
+                      marginLeft: 1.333,
+                    }}
+                    source={require("@/assets/images/check-icon.png")}
+                  />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    width: 12,
+                    height: 12,
+                    flexShrink: 0,
+                    borderTopLeftRadius: 17,
+                    borderTopRightRadius: 17,
+                    borderBottomRightRadius: 17,
+                    borderBottomLeftRadius: 17,
+                    borderWidth: 2,
+                    borderColor: "rgba(0, 8, 48, 0.27)",
+                    borderStyle: "solid",
+                    position: "relative",
+                    overflow: "hidden",
+                    zIndex: 202,
+                  }}
+                />
+              )}
               <Text
                 style={{
                   height: 20,
@@ -626,9 +718,9 @@ export default function Post({
                 }}
                 numberOfLines={1}
               >
-                24%
+                {voted === POLLS_OPTIONS.OTHER ? "70%" : "24%"}
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -896,7 +988,6 @@ export default function Post({
               display: "flex",
               width: 160,
               flexDirection: "row",
-              // gap: 12,
               alignItems: "center",
               flexShrink: 0,
               flexWrap: "nowrap",
