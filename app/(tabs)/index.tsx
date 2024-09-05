@@ -1,7 +1,6 @@
 import {
   Image,
   StyleSheet,
-  Platform,
   View,
   Text,
   Animated,
@@ -14,6 +13,7 @@ import { TabView } from "@rneui/themed";
 import { useState } from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native";
+import Post from "@/components/Post";
 
 export default function HomeScreen() {
   const scrollY = new Animated.Value(0);
@@ -61,6 +61,7 @@ export default function HomeScreen() {
                     width: "100%",
                     gap: 8,
                     paddingHorizontal: 20,
+                    marginBottom: 20,
                   }}
                 >
                   <Image
@@ -119,7 +120,40 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
-                <Text>Recent</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    width: 393,
+                    flexDirection: "column",
+                    gap: 16,
+                    paddingTop: 0,
+                    alignItems: "flex-start",
+                    flexWrap: "nowrap",
+                    position: "relative",
+                    marginTop: 0,
+                    marginRight: "auto",
+                    marginBottom: 0,
+                    marginLeft: "auto",
+                    paddingBottom: 10,
+                  }}
+                >
+                  <Post />
+                  <Post disableImage disableComment />
+                  <Post
+                    disableImage
+                    disableComment
+                    link="citizenremote.com"
+                    title="Check out new article"
+                    description="It's about portugal!"
+                  />
+                  <Post
+                    disableImage
+                    disableComment
+                    poll
+                    title="McDonalds"
+                    description="Let's talk about burgers"
+                  />
+                </View>
               </ScrollView>
             </TabView.Item>
             <TabView.Item style={{ width: "100%" }}>
