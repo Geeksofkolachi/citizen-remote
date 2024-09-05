@@ -499,7 +499,7 @@ export default function Post({
               <View
                 style={{
                   width: voted === POLLS_OPTIONS.CHEESEBURGER ? 150 : 126,
-                  height: 36,
+                  height: 38,
                   flexShrink: 0,
                   backgroundColor: "rgba(0, 16, 64, 0.06)",
                   borderTopLeftRadius: 6,
@@ -624,7 +624,7 @@ export default function Post({
               <View
                 style={{
                   width: voted === POLLS_OPTIONS.OTHER ? 240 : 126,
-                  height: 36,
+                  height: 38,
                   flexShrink: 0,
                   backgroundColor: "rgba(0, 16, 64, 0.06)",
                   borderTopLeftRadius: 6,
