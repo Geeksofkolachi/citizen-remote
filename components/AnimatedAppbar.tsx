@@ -1,3 +1,5 @@
+import Logo from "@/assets/svgs/Logo";
+import { Colors } from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { Tab } from "@rneui/themed";
 import { Dispatch, SetStateAction } from "react";
@@ -37,11 +39,25 @@ export const AnimtedAppBar = (
           paddingBottom: 20,
         }}
       >
-        <Image
-          source={require("@/assets/images/logo.png")}
-          style={styles.logo}
-        />
-        <FontAwesome name="search" size={34} color="#62636c" />
+        <View
+          style={{
+            backgroundColor: Colors.light.text,
+            width: 40,
+            height: 40,
+            borderRadius: 50,
+            shadowColor: "#000000",
+            shadowOffset: {
+              width: 0,
+              height: 7,
+            },
+            shadowOpacity: 0.34,
+            shadowRadius: 17,
+            elevation: 10,
+          }}
+        >
+          <Logo size={40} />
+        </View>
+        <FontAwesome name="search" size={28} color="#62636c" />
       </View>
       <View
         style={{

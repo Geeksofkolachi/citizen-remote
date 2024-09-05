@@ -48,9 +48,9 @@ export default function HomeScreen() {
               }}
             >
               <ScrollView
-                onScroll={(e) => {
-                  scrollY.setValue(e.nativeEvent.contentOffset.y);
-                }}
+                onScroll={(e) =>
+                  scrollY.setValue(e.nativeEvent.contentOffset.y)
+                }
               >
                 <View style={{ height: 150 }}></View>
                 <View
@@ -59,7 +59,7 @@ export default function HomeScreen() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     width: "100%",
-                    gap: 8,
+                    gap: 16,
                     paddingHorizontal: 20,
                     marginBottom: 20,
                   }}
@@ -92,8 +92,8 @@ export default function HomeScreen() {
                       <Image
                         source={require("@/assets/images/attach-image.png")}
                         style={{
-                          width: 22,
-                          height: 22,
+                          width: 20,
+                          height: 20,
                           resizeMode: "contain",
                         }}
                       />
@@ -102,8 +102,8 @@ export default function HomeScreen() {
                       <Image
                         source={require("@/assets/images/attach-gif.png")}
                         style={{
-                          width: 22,
-                          height: 22,
+                          width: 20,
+                          height: 20,
                           resizeMode: "contain",
                         }}
                       />
@@ -112,8 +112,8 @@ export default function HomeScreen() {
                       <Image
                         source={require("@/assets/images/more-options.png")}
                         style={{
-                          width: 22,
-                          height: 22,
+                          width: 20,
+                          height: 20,
                           resizeMode: "contain",
                         }}
                       />

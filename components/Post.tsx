@@ -1025,7 +1025,7 @@ export default function Post({
             zIndex: 43,
           }}
         >
-          <View
+          <TouchableOpacity
             style={{
               display: "flex",
               height: 32,
@@ -1090,8 +1090,8 @@ export default function Post({
             >
               Like
             </Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               display: "flex",
               height: 32,
@@ -1140,8 +1140,8 @@ export default function Post({
             >
               Comment
             </Text>
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               display: "flex",
               height: 32,
@@ -1206,7 +1206,7 @@ export default function Post({
             >
               Share
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
       {!disableComment ? (
